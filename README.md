@@ -7,3 +7,5 @@ npx create-next-app@latest
 ```
 
 - clear `page.tsx` and `globals.css`
+
+## 3.2 Card Component
