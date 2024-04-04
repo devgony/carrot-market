@@ -23,3 +23,9 @@ npx create-next-app@latest
 
 - ring: handle all sides of borders with `Variables`
 - `placeholder:drop-shadow` : use sudo-element to access children
+
+## 3.5 Responsive Modifiers
+
+```
+sm:bg-red-100 md:bg-green-100 lg:bg-cyan-100 xl:bg-orange-100 2xl:bg-purple-100
+```
