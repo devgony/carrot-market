@@ -92,3 +92,22 @@ animate-spin
   ..
 </div>
 ```
+
+## 3.10 JIT
+
+```ts
+// tailwind.config.ts
+  theme: {
+    extend: {
+      margin: {
+        tomato: "120px",
+      },
+      borderRadius: {
+        "sexy-name": "11.11px",
+      },
+    },
+  },
+
+// page.tsx
+<button className=".. rounded-sexy-name mt-tomato">
+```
