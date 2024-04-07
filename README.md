@@ -111,3 +111,46 @@ animate-spin
 // page.tsx
 <button className=".. rounded-sexy-name mt-tomato">
 ```
+
+## 3.11 Directives
+
+### Base
+
+- default styles like resetting padding, margin..
+
+### Utility
+
+- compiler convert utility class names to css styles
+
+### Component: set of ?
+
+- To encapsulate utility classes
+- To use plugins
+
+### @layer directive
+
+- extends each layers {Base | Utility | Component}
+
+### @apply
+
+- apply directives to the layer
+
+```
+@layer base {
+  a {
+    @apply text-blue-500;
+  }
+}
+
+@layer utilities {
+  .text-bigger-hello {
+    @apply text-3xl font-semibold;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply w-full bg-black h-10 text-white rounded-sexy-name mt-tomato;
+  }
+}
+```
