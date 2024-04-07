@@ -44,3 +44,17 @@ sm:bg-red-100 md:bg-green-100 lg:bg-cyan-100 xl:bg-orange-100 2xl:bg-purple-100
   Email is required.
 </span>
 ```
+
+## 3.7 State Modifiers
+
+- To all children
+
+```
+*:outline-none
+```
+
+- If has
+
+```
+has-[:invalid]:ring-red-100
+```
