@@ -78,3 +78,17 @@ animate-ping
 animate-bounce
 animate-spin
 ```
+
+## 3.9 Group Modifiers
+
+- Handle the state of `any children` of the group.
+
+```ts
+<div key={index} className=".. group">
+  ..
+  <span className=".. group-hover:text-red-500">
+    {person}
+  </span>
+  ..
+</div>
+```
