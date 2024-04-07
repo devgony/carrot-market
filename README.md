@@ -58,3 +58,23 @@ sm:bg-red-100 md:bg-green-100 lg:bg-cyan-100 xl:bg-orange-100 2xl:bg-purple-100
 ```
 has-[:invalid]:ring-red-100
 ```
+
+## 3.8 Lists and Animations
+
+- List
+
+```
+odd:bg-gray-100
+even:bg-cyan-100
+first:border-0
+last:border-0
+```
+
+- Animation
+
+```
+animate-pulse
+animate-ping
+animate-bounce
+animate-spin
+```
