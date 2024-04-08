@@ -348,9 +348,38 @@ npm i zod
 touch app/create-account/actions.ts
 ```
 
+- single field validation with zod
+
 ```ts
 // app/create-account/actions.ts
 import { z } from "zod";
 const usernameSchema = z.string().min(5).max(10);
 usernameSchema.parse(data.username); // throw error
+```
+
+## 6.1 Validation Errors
+
+- object validation with zod
+- recoverable error with `safeParse`
+
+```ts
+// app/create-account/actions.ts
+const formSchema = z.object({
+  username: z.string().min(3).max(10),
+  email: z.string().email(),
+  password: z.string().min(10),
+  confirm_password: z.string().min(10),
+});
+..
+const result = formSchema.safeParse(data);
+if (!result.success) {
+  return result.error.flatten();
+}
+```
+
+```ts
+// app/create-account/page.tsx
+const [state, dispatch] = useFormState(createAccount, null);
+..
+<FormInput .. errors={state?.fieldErrors.email} />
 ```
