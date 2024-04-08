@@ -440,3 +440,24 @@ password: z
     "Passwords must contain at least one UPPERCASE, lowercase, number and special characters #?!@$%^&*-",
   ),
 ```
+
+## 6.4 Refactor
+
+```sh
+mv components/form-input.tsx components/input.tsx
+mv components/form-btn.tsx components/button.tsx
+```
+
+- inherit `InputHTMLAttributes<HTMLInputElement>`
+
+```ts
+// components/input.tsx
+export default function Input({
+  name,
+  errors = [],
+  ...rest
+}: InputProps & InputHTMLAttributes<HTMLInputElement>) {
+      <input
+        ..
+        {...rest}
+```
