@@ -291,3 +291,23 @@ async function handleForm(formData: FormData) {
 ..
   <input name={name} ..
 ```
+
+## 5.2 useFormStatus
+
+- useFormStatus gives the status of parent form like pending, data, method, action ..
+- it should be with `use client` and inside of form tag
+
+```ts
+// components/form-btn.tsx
+"use client";
+import { useFormStatus } from "react-dom";
+..
+export default function FormButton({ text }: FormButtonProps) {
+  const { pending } = useFormStatus();
+  return (
+    <button disabled={pending} .. >
+      {pending ? "로딩 중" : text}
+    </button>
+  );
+}
+```
