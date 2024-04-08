@@ -338,3 +338,19 @@ export default function LogIn() {
   ..
   <form action={action} .. >
 ```
+
+# 6. VALIDATION
+
+## 6.0 Introduction to Zod
+
+```sh
+npm i zod
+touch app/create-account/actions.ts
+```
+
+```ts
+// app/create-account/actions.ts
+import { z } from "zod";
+const usernameSchema = z.string().min(5).max(10);
+usernameSchema.parse(data.username); // throw error
+```
