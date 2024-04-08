@@ -311,3 +311,30 @@ export default function FormButton({ text }: FormButtonProps) {
   );
 }
 ```
+
+## 5.3 useFormState
+
+- callback of `useFormState` should be with `use server`
+- 2nd arg of `useFormState` is initState
+- `useFormState` itself should be with `use client`
+
+```ts
+// app/login/actions.ts
+"use server";
+
+export async function handleForm(prevState: any, formData: FormData) {
+  console.log(prevState);
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+  return {
+    errors: ["wrong password", "password too short"],
+  };
+}
+
+// app/login/page.tsx
+"use client";
+
+export default function LogIn() {
+  const [state, action] = useFormState(handleForm, null);
+  ..
+  <form action={action} .. >
+```
