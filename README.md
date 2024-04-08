@@ -1,5 +1,7 @@
 # Carrot Market
 
+# 2. INTRODUCTION
+
 ## 2.5 Project Setup
 
 ```sh
@@ -7,6 +9,8 @@ npx create-next-app@latest
 ```
 
 - clear `page.tsx` and `globals.css`
+
+# 3 TAILWIND
 
 ## 3.2 Card Component
 
@@ -165,3 +169,9 @@ npm install -D @tailwindcss/forms
 // tailwind.config.ts
 plugins: [require("@tailwindcss/forms")],
 ```
+
+# 4. AUTHENTICATION UI
+
+## 4.0 Home Screen
+
+- impl login home styles
