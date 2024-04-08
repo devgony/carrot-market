@@ -265,3 +265,29 @@ export async function POST(request: NextRequest) {
 ```
 
 - but with Server action, we don't need even this
+
+## 5.1 Server Action
+
+1. define handleForm with `use server`
+2. assign to form.action
+3. input tag should use unique `name` to distinguish each params
+
+```ts
+// app/login/page.tsx
+async function handleForm(formData: FormData) {
+  "use server";
+  console.log(formData.get("email"), formData.get("password"));
+  console.log("i run in the server baby!");
+}
+..
+<form action={handleForm} className="flex flex-col gap-3">
+..
+   <FormInput name="email" ..
+   <FormInput name="password" ..
+```
+
+```ts
+// components/form-input.tsx
+..
+  <input name={name} ..
+```
