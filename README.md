@@ -154,3 +154,14 @@ animate-spin
   }
 }
 ```
+
+## 3.12 Plugins
+
+```sh
+npm install -D @tailwindcss/forms
+```
+
+```ts
+// tailwind.config.ts
+plugins: [require("@tailwindcss/forms")],
+```
