@@ -218,3 +218,50 @@ components/social-login.tsx
   ]
 }
 ```
+
+# 5. SERVER ACTIONS
+
+## 5.0 Route Handlers
+
+```sh
+mkdir -p app/www/users
+touch app/www/users/route.ts
+```
+
+- legacy way to handle route
+
+```ts
+// app/login/page.tsx
+"use client";
+..
+const onClick = async () => {
+  const response = await fetch("/www/users", {
+    method: "POST",
+    body: JSON.stringify({
+      username: "nico",
+      password: "1234",
+    }),
+  });
+  console.log(await response.json());
+};
+```
+
+```ts
+// app/www/users/route.ts
+import { NextRequest } from "next/server";
+
+export async function GET(request: NextRequest) {
+  console.log(request);
+  return Response.json({
+    ok: true,
+  });
+}
+
+export async function POST(request: NextRequest) {
+  const data = await request.json();
+  console.log("log the user in!!!");
+  return Response.json(data);
+}
+```
+
+- but with Server action, we don't need even this
