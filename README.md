@@ -187,3 +187,13 @@ app/login
 touch app/create-account/page.tsx \
 app/login/page.tsx
 ```
+
+## 4.2 Form Components
+
+```sh
+mkdir components
+
+touch components/form-btn.tsx \
+components/form-input.tsx
+components/social-login.tsx
+```
