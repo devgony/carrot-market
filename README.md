@@ -197,3 +197,24 @@ touch components/form-btn.tsx \
 components/form-input.tsx
 components/social-login.tsx
 ```
+
+## 4.3 Log in Screen
+
+```sh
+mkdir app/sms
+
+touch app/sms/page.tsx \
+components/social-login.tsx
+```
+
+- remind that now `tsconfig` convert import alias to relative path
+
+```ts
+// tsconfig.json
+..
+"paths": {
+  "@/*": [
+    "./*"
+  ]
+}
+```
