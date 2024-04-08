@@ -383,3 +383,38 @@ const [state, dispatch] = useFormState(createAccount, null);
 ..
 <FormInput .. errors={state?.fieldErrors.email} />
 ```
+
+## 6.2 Refinement
+
+- refine each field with `.refine(field => bool)`
+- refine whole schema with `superRefine(schema => bool)`
+  - set path of error
+
+```ts
+const formSchema = z
+  .object({
+    username: z
+      .string({
+        invalid_type_error: "Username must be a string!",
+        required_error: "Where is my username???",
+      })
+      .min(3, "Way too short!!!")
+      .max(10, "That is too looooong!")
+      .refine(
+        (username) => !username.includes("potato"),
+        "No potatoes allowed!",
+      ),
+    email: z.string().email(),
+    password: z.string().min(10),
+    confirm_password: z.string().min(10),
+  })
+  .superRefine(({ password, confirm_password }, ctx) => {
+    if (password !== confirm_password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Two passwords should be equal",
+        path: ["confirm_password"],
+      });
+    }
+  });
+```
