@@ -418,3 +418,25 @@ const formSchema = z
     }
   });
 ```
+
+## 6.3 Transformation
+
+```ts
+username: z
+  .string({
+    invalid_type_error: "Username must be a string!",
+    required_error: "Where is my username???",
+  })
+  .min(3, "Way too short!!!")
+  .trim()
+  .toLowerCase()
+  .transform((username) => `🔥 ${username}`)
+..
+password: z
+  .string()
+  .min(4)
+  .regex(
+    passwordRegex,
+    "Passwords must contain at least one UPPERCASE, lowercase, number and special characters #?!@$%^&*-",
+  ),
+```
