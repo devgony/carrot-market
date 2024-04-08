@@ -175,3 +175,15 @@ plugins: [require("@tailwindcss/forms")],
 ## 4.0 Home Screen
 
 - impl login home styles
+
+## 4.1 Create Account Screen
+
+```sh
+npm install @heroicons/react
+
+mkdir app/create-account \
+app/login
+
+touch app/create-account/page.tsx \
+app/login/page.tsx
+```
