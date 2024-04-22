@@ -461,3 +461,28 @@ export default function Input({
         ..
         {...rest}
 ```
+
+## 6.6 Log In Validation
+
+- path alias by tsconfig
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+..
+```
+
+- implement login action like create-account
+- sms page base
+
+```sh
+mkdir lib
+touch lib/constants.ts \
+app/sms/actions.ts
+```
