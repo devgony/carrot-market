@@ -486,3 +486,19 @@ mkdir lib
 touch lib/constants.ts \
 app/sms/actions.ts
 ```
+
+## 6.7 Coerce
+
+- `validator` helps to verify complex patterns like phone number
+
+```sh
+npm i validator
+npm i --save-dev @types/validator
+```
+
+- `z.coerce.nubmer()` tries to convert strnig to nubmer
+
+```ts
+// app/sms/actions.ts
+const tokenSchema = z.coerce.number().min(100000).max(999999);
+```
