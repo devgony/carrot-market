@@ -502,3 +502,8 @@ npm i --save-dev @types/validator
 // app/sms/actions.ts
 const tokenSchema = z.coerce.number().min(100000).max(999999);
 ```
+
+## 6.8 SMS Validation
+
+- actions: if prevState does not have token, validate phone else token
+- page: if state has token, show only token formInput.
