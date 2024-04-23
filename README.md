@@ -560,3 +560,9 @@ db.user
     console.log(users);
   });
 ```
+
+## 7.3 Prisma Studio
+
+```sh
+npx prisma studio
+```
