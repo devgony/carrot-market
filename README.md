@@ -566,3 +566,28 @@ db.user
 ```sh
 npx prisma studio
 ```
+
+## 7.4 Relationships
+
+- User : SMSToken = 1 : N
+
+```
+person --> phone#   --> sms(token)
+token  --> SMSToken <-> User --> log the user in
+```
+
+```ts
+// lib/db.ts
+async function create_sms() {
+  const token = await db.sMSToken.create({
+    data: {
+      token: "1212112",
+      user: {
+        connect: {
+          id: 1,
+        },
+      },
+    },
+  });
+}
+```
