@@ -541,3 +541,22 @@ model User {
 ```sh
 npx prisma migrate dev
 ```
+
+## 7.2 Prisma Client
+
+- Prisma client supports types from `node_modules/.prisma/client/index.d.ts`
+
+```ts
+// touch lib/db.ts
+import { PrismaClient } from "@prisma/client";
+const db = new PrismaClient();
+db.user
+  .create({
+    data: {
+      username: "test",
+    },
+  })
+  .then((users) => {
+    console.log(users);
+  });
+```
