@@ -516,6 +516,7 @@ npx prisma init
 ```
 
 ```prisma
+// schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -590,4 +591,13 @@ async function create_sms() {
     },
   });
 }
+```
+
+## 7.5 onDelete
+
+```prisma
+// schema.prisma
+model SMSToken {
+  ..
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 ```
