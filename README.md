@@ -90,9 +90,7 @@ animate-spin
 ```ts
 <div key={index} className=".. group">
   ..
-  <span className=".. group-hover:text-red-500">
-    {person}
-  </span>
+  <span className=".. group-hover:text-red-500">{person}</span>
   ..
 </div>
 ```
@@ -402,7 +400,7 @@ const formSchema = z
       .max(10, "That is too looooong!")
       .refine(
         (username) => !username.includes("potato"),
-        "No potatoes allowed!",
+        "No potatoes allowed!"
       ),
     email: z.string().email(),
     password: z.string().min(10),
@@ -507,3 +505,39 @@ const tokenSchema = z.coerce.number().min(100000).max(999999);
 
 - actions: if prevState does not have token, validate phone else token
 - page: if state has token, show only token formInput.
+
+# 7. PRISMA
+
+## 7.1 Schemas
+
+```sh
+npm i prisma
+npx prisma init
+```
+
+```prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  email      String?  @unique
+  password   String?
+  phone      String?  @unique
+  github_id  String?  @unique
+  avatar     String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+```
+
+```sh
+npx prisma migrate dev
+```
