@@ -8,6 +8,9 @@ import {
 } from "@/lib/constants";
 import db from "@/lib/db";
 import bcrypt from "bcrypt";
+import { getIronSession } from "iron-session";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const checkUsername = (username: string) => !username.includes("potato");
 
@@ -102,6 +105,7 @@ export async function createAccount(prevState: any, formData: FormData) {
   } else {
     // hash password
     const hashedPassword = await bcrypt.hash(result.data.password, 12);
+    // save the user to db
     const user = await db.user.create({
       data: {
         username: result.data.username,
@@ -112,8 +116,14 @@ export async function createAccount(prevState: any, formData: FormData) {
         id: true,
       },
     });
-    // save the user to db
     // log the user in
+    const cookie = await getIronSession<typeof user>(cookies(), {
+      cookieName: "delicious-karrot",
+      password: process.env.COOKIE_PASSWORD!,
+    });
+    cookie.id = user.id;
+    await cookie.save();
     // redirect "/home"
+    redirect("/profile");
   }
 }

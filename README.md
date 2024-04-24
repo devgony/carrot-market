@@ -651,3 +651,26 @@ npm i bcrypt @types/bcrypt
 ```ts
 const hashedPassword = await bcrypt.hash(result.data.password, 12);
 ```
+
+## 8.3 Iron Session
+
+```sh
+npm i iron-session
+mkdir -p app/profile/
+touch app/profile/page.tsx
+```
+
+- [password generator](https://1password.com/password-generator/)
+  - `process.env.COOKIE_PASSWORD` should be longer than 32 bytes
+
+```ts
+// log the user in
+const cookie = await getIronSession<typeof user>(cookies(), {
+  cookieName: "delicious-karrot",
+  password: process.env.COOKIE_PASSWORD!,
+});
+cookie.id = user.id;
+await cookie.save();
+
+redirect("/profile");
+```
