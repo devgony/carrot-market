@@ -641,3 +641,13 @@ z.object.refine(checkPasswords, {
   path: ["confirm_password"],
 });
 ```
+
+## 8.2 Password Hashing
+
+```sh
+npm i bcrypt @types/bcrypt
+```
+
+```ts
+const hashedPassword = await bcrypt.hash(result.data.password, 12);
+```
