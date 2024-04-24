@@ -601,3 +601,43 @@ model SMSToken {
   ..
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 ```
+
+# 8 AUTHENTICATION
+
+## 8.1 Database Validation
+
+- validate with async email query, refine, safeParseAsync
+
+```ts
+const checkUniqueEmail = async (email: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      email,
+    },
+    select: {
+      id: true,
+    },
+  });
+  return Boolean(user) === false;
+};
+..
+  email: z
+    ..
+    .refine(
+      checkUniqueEmail,
+      "There is an account already registered with that email."
+    ),
+..
+export async function createAccount(prevState: any, formData: FormData) {
+  ..
+  const result = await formSchema.safeParseAsync(data);
+```
+
+- shouldn't it be superRefine to refine `object`?
+
+```ts
+z.object.refine(checkPasswords, {
+  message: "Both passwords should be the same!",
+  path: ["confirm_password"],
+});
+```
