@@ -686,3 +686,34 @@ touch lib/session.ts
 ```
 
 - impl login/actions.ts with getSession, unify error with zod
+
+## 8.6 superRefine
+
+- move checkUniqueUsername and checkUniqueEmail to callback of superRefine
+- To enhance efficiency through lazy evaluation.
+  1. fatal: true
+  2. return z.NEVER
+  3. evaluate superRefine earlier than refine
+
+```ts
+// app/create-account/actions.ts
+.superRefine(async ({ username }, ctx) => {
+  const user = await db.user.findUnique({
+    where: {
+      username,
+    },
+    select: {
+      id: true,
+    },
+  });
+  if (user) {
+    ctx.addIssue({
+      code: "custom",
+      message: "This username is already taken",
+      path: ["username"],
+      fatal: true,
+    });
+    return z.NEVER;
+  }
+})
+```
