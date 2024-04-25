@@ -674,3 +674,15 @@ await cookie.save();
 
 redirect("/profile");
 ```
+
+## 8.5 Email Log In
+
+- zod.`spa` is alias of safeParseAsync
+- extract getSession
+- checkEmailExists at zod -> can separate with biz logic
+
+```sh
+touch lib/session.ts
+```
+
+- impl login/actions.ts with getSession, unify error with zod
