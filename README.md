@@ -856,3 +856,27 @@ Authorization callback URL: http://henrypb:3000/github/complete
 
 - Generate a new client secret
 - copy GITHUB_CLIENT_SECRET, GITHUB_CLIENT_ID to .env
+
+## 9.2 Access Token
+
+```sh
+mkdir app/github/complete/
+touch app/github/complete/route.ts
+```
+
+```ts
+// app/github/complete/route.ts
+const accessTokenParams = new URLSearchParams({
+  client_id: process.env.GITHUB_CLIENT_ID!,
+  client_secret: process.env.GITHUB_CLIENT_SECRET!,
+  code,
+}).toString();
+const accessTokenURL = `https://github.com/login/oauth/access_token?${accessTokenParams}`;
+const accessTokenResponse = await fetch(accessTokenURL, {
+  method: "POST",
+  headers: {
+    Accept: "application/json",
+  },
+});
+const accessTokenData = await accessTokenResponse.json();
+```
