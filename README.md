@@ -754,3 +754,22 @@ export default function getSession() {
   });
 }
 ```
+
+## 8.9 Middleware
+
+```
+GET /profile --> middleware() --> <Profile /> : <404 />
+```
+
+- middleware evaluated whenever server gets requests
+
+```ts
+// touch middleware.ts
+export async function middleware(request: NextRequest) {
+  const session = await getSession();
+  console.log(session);
+  if (request.nextUrl.pathname === "/profile") {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+}
+```
