@@ -783,3 +783,12 @@ export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
 ```
+
+## 8.11 Edge Runtime
+
+- run SQL in middleware -> error: PrismaClient is unable to run in Vercel Edge Function
+
+  - Vercel Edge function: light weight version nodeJS
+  - but latancy is lowest
+
+- https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes
