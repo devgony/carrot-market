@@ -822,3 +822,37 @@ if (!session.id) {
   }
 }
 ```
+
+# 9 SOCIAL AUTHENTICATION
+
+## 9.1 Github Authentication
+
+```sh
+mkdir -p app/github/start/
+touch app/github/start/route.ts
+```
+
+```ts
+// app/github/start/route.ts
+export function GET() {
+  const baseURL = "https://github.com/login/oauth/authorize";
+  const params = {
+    client_id: process.env.GITHUB_CLIENT_ID!,
+    scope: "read:user,user:email",
+    allow_signup: "true",
+  };
+  const formattedParams = new URLSearchParams(params).toString();
+  const finalUrl = `${baseURL}?${formattedParams}`;
+  return Response.redirect(finalUrl);
+}
+```
+
+- [create new Oauth](github.com/settings/applications/new)
+
+```
+Homepage URL: http://henrypb:3000/login
+Authorization callback URL: http://henrypb:3000/github/complete
+```
+
+- Generate a new client secret
+- copy GITHUB_CLIENT_SECRET, GITHUB_CLIENT_ID to .env
