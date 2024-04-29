@@ -717,3 +717,40 @@ touch lib/session.ts
   }
 })
 ```
+
+## 8.7 Log Out
+
+- instead of `onClick`, use form.action with `use server`
+
+```ts
+// app/profile/page.tsx
+const logOut = async () => {
+    "use server";
+    const session = await getSession();
+    await session.destroy();
+    redirect("/");
+  };
+  return (
+    <div>
+      <h1>Welcome! {user?.username}!</h1>
+      <form action={logOut}>
+        <button>Log out</button>
+      </form>
+      ..
+```
+
+- `next/navigation.notFound` will redirect to 404
+- To solve volatile cookie error: `it had the secure attribute but was not received over a secure connection`, add `cookieOptions.secure: false`
+
+```ts
+// lib/session.ts
+export default function getSession() {
+  return getIronSession<SessionContent>(cookies(), {
+    cookieName: "delicious-karrot",
+    password: process.env.COOKIE_PASSWORD!,
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+    },
+  });
+}
+```
