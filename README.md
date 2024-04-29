@@ -792,3 +792,33 @@ export const config = {
   - but latancy is lowest
 
 - https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes
+
+## 8.12 Authentication Middleware
+
+- use hashMap to search faster
+- redirect to proper page with login state
+
+```ts
+interface Routes {
+  [key: string]: boolean;
+}
+
+const publicOnlyUrls: Routes = {
+  "/": true,
+  "/login": true,
+  "/sms": true,
+  "/create-account": true,
+};
+..
+if (!session.id) {
+  if (!exists) {
+    // no login? --> go to /
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+} else {
+  if (exists) {
+    // already loged in? --> go to product main
+    return NextResponse.redirect(new URL("/products", request.url));
+  }
+}
+```
