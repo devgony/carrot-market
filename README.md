@@ -773,3 +773,13 @@ export async function middleware(request: NextRequest) {
   }
 }
 ```
+
+## 8.10 Matcher
+
+- exclude by config.matcher
+
+```ts
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+};
+```
