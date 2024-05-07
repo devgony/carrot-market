@@ -880,3 +880,8 @@ const accessTokenResponse = await fetch(accessTokenURL, {
 });
 const accessTokenData = await accessTokenResponse.json();
 ```
+
+## 9.3 Github API
+
+- if user exists, save session and redirect, else create user user and save session in cookie.
+  - app/github/complete/route.ts
