@@ -919,3 +919,28 @@ const email = res.length > 0 ? res[0].email : null;
 - isolate request(getAccessToken) and response (getGithubProfile)
 
 - don't we have to try-catch with middleware?
+
+## 9.5 SMS Token
+
+- get unique token with recursive execution
+
+```ts
+async function getToken() {
+  const token = crypto.randomInt(100000, 999999).toString();
+  const exists = await db.sMSToken.findUnique({
+    where: {
+      token,
+    },
+    select: {
+      id: true,
+    },
+  });
+  if (exists) {
+    return getToken();
+  } else {
+    return token;
+  }
+}
+```
+
+- delete can create new SMSToken with hashed random username
