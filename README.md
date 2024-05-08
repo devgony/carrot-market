@@ -899,7 +899,7 @@ async function logUserIn(id: number) {
 }
 ```
 
-- handle dupplicated username => errror or random suffix
+- handle duplicated username => errror or random suffix
 
 ```ts
 const usernameExists = await db.user.findUnique({
@@ -944,3 +944,19 @@ async function getToken() {
 ```
 
 - delete can create new SMSToken with hashed random username
+
+## 9.6 Token Verification
+
+- inefficient duplicated find, though we need join
+
+```ts
+const token = await db.sMSToken.findUnique({ // inefficient duplicated find, though we need join
+  where: {
+    token: result.data.toString(),
+  },
+  select: {
+    id: true,
+    userId: true,
+  },
+});
+```
