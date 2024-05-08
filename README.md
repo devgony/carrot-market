@@ -950,7 +950,8 @@ async function getToken() {
 - inefficient duplicated find, though we need join
 
 ```ts
-const token = await db.sMSToken.findUnique({ // inefficient duplicated find, though we need join
+const token = await db.sMSToken.findUnique({
+  // inefficient duplicated find, though we need join
   where: {
     token: result.data.toString(),
   },
@@ -958,5 +959,26 @@ const token = await db.sMSToken.findUnique({ // inefficient duplicated find, tho
     id: true,
     userId: true,
   },
+});
+```
+
+## 9.7 Twilio SMS
+
+- [should create new twilio project to get opt](https://www.twilio.com/console/projects/create)
+
+```sh
+npm i twilio
+```
+
+```ts
+// app/sms/actions.ts
+const client = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+await client.messages.create({
+  body: `Your Karrot verification code is: ${token}`,
+  from: process.env.TWILIO_PHONE_NUMBER!,
+  to: process.env.MY_PHONE_NUMBER!, // should be result.data
 });
 ```
