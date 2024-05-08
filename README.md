@@ -982,3 +982,35 @@ await client.messages.create({
   to: process.env.MY_PHONE_NUMBER!, // should be result.data
 });
 ```
+
+## 9.8 Code Challenge
+
+- get phone number and enhance verification
+- can't we refer the joined table in prisma method?
+
+```ts
+const smsToken = await db.sMSToken.findUnique({
+  where: {
+    token: resultToken.data.toString(),
+  },
+  select: {
+    id: true,
+    userId: true,
+    phone: true,
+    user: {
+      select: {
+        phone: true,
+      },
+    },
+  },
+});
+
+if (smsToken?.phone !== smsToken?.user.phone) {
+  return {
+    token: true,
+    error: {
+      formErrors: ["This token does not match the phone number."],
+    },
+  };
+}
+```
