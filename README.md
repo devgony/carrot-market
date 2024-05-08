@@ -885,3 +885,37 @@ const accessTokenData = await accessTokenResponse.json();
 
 - if user exists, save session and redirect, else create user user and save session in cookie.
   - app/github/complete/route.ts
+
+## 9.4 Code Challenge
+
+- extract fn logUserIn(id: number)
+
+```ts
+async function logUserIn(id: number) {
+  const session = await getSession();
+  session.id = id;
+  await session.save();
+  return redirect("/profile");
+}
+```
+
+- handle dupplicated username => errror or random suffix
+
+```ts
+const usernameExists = await db.user.findUnique({
+  where: { username: login },
+});
+
+const username = usernameExists ? `${login}_${id}` : login; // security issue?
+```
+
+- get email of user : /user/emails (getUserEmail)
+
+```ts
+const res: [{ email: string }] = await emailResponse.json();
+const email = res.length > 0 ? res[0].email : null;
+```
+
+- isolate request(getAccessToken) and response (getGithubProfile)
+
+- don't we have to try-catch with middleware?
