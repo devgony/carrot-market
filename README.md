@@ -1014,3 +1014,31 @@ if (smsToken?.phone !== smsToken?.user.phone) {
   };
 }
 ```
+
+# 10 PRODUCTS
+
+## 10.0 Introduction
+
+```prisma
+model User {
+  ..
+  Product    Product[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  title       String
+  price       Float
+  photo       String
+  description String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+}
+```
+
+```sh
+npm run mig
+> add product
+```
