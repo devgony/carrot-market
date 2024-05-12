@@ -1042,3 +1042,34 @@ model Product {
 npm run mig
 > add product
 ```
+
+## 10.1 Tab Bar
+
+- create tabBar and components base
+- `(group-name)` can separate directory without affecting route
+
+```sh
+mkdir app/\(auth\)
+mv app/create-account/ app/\(auth\)/
+mv app/github/ app/\(auth\)/
+mv app/login/ app/\(auth\)/
+mv app/sms/ app/\(auth\)/
+mv app/page.tsx app/\(auth\)/page.tsx
+
+mkdir app/\(tabs\) \
+mkdir app/\(tabs\)/chat/ \
+app/\(tabs\)/life/ \
+app/\(tabs\)/live/ \
+app/\(tabs\)/products/
+
+touch app/\(tabs\)/chat/page.tsx \
+app/\(tabs\)/layout.tsx \
+app/\(tabs\)/life/page.tsx \
+app/\(tabs\)/live/page.tsx \
+app/\(tabs\)/products/page.tsx
+
+mv app/profile/ app/\(tabs\)
+
+rm app/www/users/route.ts
+touch components/tab-bar.tsx
+```
