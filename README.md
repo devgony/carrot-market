@@ -1073,3 +1073,11 @@ mv app/profile/ app/\(tabs\)
 rm app/www/users/route.ts
 touch components/tab-bar.tsx
 ```
+
+## 10.2 Skeletons
+
+- render skeletons of product with animate-pulse
+
+```sh
+touch app/\(tabs\)/products/loading.tsx
+```
