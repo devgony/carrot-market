@@ -1132,13 +1132,21 @@ if (isNaN(id)) {
 }
 ```
 
+## 10.6 Image Hostnames
+
+- For optimization, basically does not allow remote images
+  - https://nextjs.org/docs/messages/next-image-unconfigured-host
 - To fix `Error: Invalid src prop (https://avatars.githubusercontent.com/u/51254761?v=4)` on next/image,
 
 ```js
 // next.config.mjs
 const nextConfig = {
   images: {
-    domains: ["avatars.githubusercontent.com"],
+    remotePatterns: [
+      {
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
   },
 };
 ```
