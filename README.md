@@ -1120,3 +1120,25 @@ export function formatToWon(price: number): string {
   return price.toLocaleString("ko-KR");
 }
 ```
+
+## 10.5 Product Detail
+
+- convert url param to number
+
+```ts
+const id = Number(params.id);
+if (isNaN(id)) {
+  return notFound();
+}
+```
+
+- To fix `Error: Invalid src prop (https://avatars.githubusercontent.com/u/51254761?v=4)` on next/image,
+
+```js
+// next.config.mjs
+const nextConfig = {
+  images: {
+    domains: ["avatars.githubusercontent.com"],
+  },
+};
+```
