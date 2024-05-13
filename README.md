@@ -1090,3 +1090,33 @@ touch app/\(tabs\)/products/loading.tsx
 touch components/list-product.tsx
 curl -o public/goguma.jpg https://raw.githubusercontent.com/nomadcoders/carrot-market-reloaded/28d9994c9b04524d0127a34176c7140a8e06774c/public/goguma.jpg
 ```
+
+## 10.4 Detail Skeleton
+
+- detail skeleton with animate-pulse
+
+```sh
+mkdir -p app/products/[id]/
+touch app/products/[id]/loading.tsx \
+app/products/[id]/page.tsx \
+lib/utils.ts
+```
+
+- formatToTimeAgo & formatToWon
+
+```ts
+export function formatToTimeAgo(date: string): string {
+  const dayInMs = 1000 * 60 * 60 * 24;
+  const time = new Date(date).getTime();
+  const now = new Date().getTime();
+  const diff = Math.round((time - now) / dayInMs);
+
+  const formatter = new Intl.RelativeTimeFormat("ko");
+
+  return formatter.format(diff, "days");
+}
+
+export function formatToWon(price: number): string {
+  return price.toLocaleString("ko-KR");
+}
+```
