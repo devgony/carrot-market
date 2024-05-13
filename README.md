@@ -1081,3 +1081,12 @@ touch components/tab-bar.tsx
 ```sh
 touch app/\(tabs\)/products/loading.tsx
 ```
+
+## 10.3 Product Component
+
+- fetch image from product.photo
+
+```sh
+touch components/list-product.tsx
+curl -o public/goguma.jpg https://raw.githubusercontent.com/nomadcoders/carrot-market-reloaded/28d9994c9b04524d0127a34176c7140a8e06774c/public/goguma.jpg
+```
