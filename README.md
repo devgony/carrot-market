@@ -1181,3 +1181,7 @@ export async function getMoreProducts(page: number) {
       created_at: "desc",
     },
 ```
+
+## 10.8 Recap
+
+- increase page onLoadMoreClick
