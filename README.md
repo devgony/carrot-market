@@ -1185,3 +1185,42 @@ export async function getMoreProducts(page: number) {
 ## 10.8 Recap
 
 - increase page onLoadMoreClick
+
+## 10.9 Infinite Scrolling
+
+- Intersection Observer API: a way to asynchronously observe changes in the `intersection` of a `target element` with `an ancestor element or with a top-level document's viewport`.
+
+```ts
+const trigger = useRef<HTMLSpanElement>(null);
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    async (
+      entries: IntersectionObserverEntry[],
+      observer: IntersectionObserver
+    ) => {
+      const element = entries[0];
+      if (element.isIntersecting && trigger.current) {
+        observer.unobserve(trigger.current); // prevent to trigger another fetch request while fetching more posts
+        setIsLoading(true);
+        const newProducts = await getMoreProducts(page + 1);
+        if (newProducts.length !== 0) {
+          setPage((prev) => prev + 1); // trigger useEffect again
+          setProducts((prev) => [...prev, ...newProducts]);
+        } else {
+          setIsLastPage(true);
+        }
+        setIsLoading(false);
+      }
+    },
+    {
+      threshold: 1.0, // fire on 100% scrolled
+    }
+  );
+  if (trigger.current) {
+    observer.observe(trigger.current);
+  }
+  return () => {
+    observer.disconnect(); // clean on unmount
+  };
+}, [page]);
+```
