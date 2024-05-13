@@ -1150,3 +1150,34 @@ const nextConfig = {
   },
 };
 ```
+
+## 10.7 Pagination Actions
+
+```sh
+touch "app/(tabs)/products/actions.ts" \
+components/product-list.tsx
+
+curl -o public/gimbap.jpg https://raw.githubusercontent.com/nomadcoders/carrot-market-reloaded/ba8f8f15f6d5fc3690665a3ab5257d221c9add65/public/gimbap.jpg
+curl -o public/odeng.jpg https://raw.githubusercontent.com/nomadcoders/carrot-market-reloaded/ba8f8f15f6d5fc3690665a3ab5257d221c9add65/public/odeng.jpg
+```
+
+- pagination with take and skip
+
+```ts
+// app/(tabs)/products/page.tsx
+async function getInitialProducts() {
+  ..
+  take: 1,
+  orderBy: {
+    created_at: "desc",
+  },
+
+// app/(tabs)/products/actions.ts
+export async function getMoreProducts(page: number) {
+  ..
+    skip: 1,
+    take: 1,
+    orderBy: {
+      created_at: "desc",
+    },
+```
