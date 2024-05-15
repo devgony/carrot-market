@@ -1237,6 +1237,7 @@ touch app/products/add/page.tsx
 - Clicking label triggers hidden file input
 
 ```ts
+// app/products/add/page.tsx
 <label
   htmlFor="photo"
   className="border-2 aspect-square flex items-center justify-center flex-col text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointer"
@@ -1252,4 +1253,25 @@ touch app/products/add/page.tsx
   accept="image/*"
   className="hidden"
 />
+```
+
+## 11.1 Form Action
+
+```sh
+touch app/products/add/actions.ts
+```
+
+```ts
+// app/products/add/page.tsx
+const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const {
+    target: { files },
+  } = event;
+  if (!files) {
+    return;
+  }
+  const file = files[0];
+  const url = URL.createObjectURL(file);
+  setPreview(url);
+};
 ```
