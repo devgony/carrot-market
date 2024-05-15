@@ -1224,3 +1224,32 @@ useEffect(() => {
   };
 }, [page]);
 ```
+
+# 11 PRODUCT UPLOAD
+
+## 11.0 Introduction
+
+```sh
+mkdir touch app/products/add/
+touch app/products/add/page.tsx
+```
+
+- Clicking label triggers hidden file input
+
+```ts
+<label
+  htmlFor="photo"
+  className="border-2 aspect-square flex items-center justify-center flex-col text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointer"
+>
+  <PhotoIcon className="w-20" />
+  <div className="text-neutral-400 text-sm">사진을 추가해주세요.</div>
+</label>
+<input
+  onChange={onImageChange}
+  type="file"
+  id="photo"
+  name="photo"
+  accept="image/*"
+  className="hidden"
+/>
+```
