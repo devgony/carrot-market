@@ -16,6 +16,17 @@ export default function AddProduct() {
       return;
     }
     const file = files[0];
+
+    if (file.type.split("/")[0] !== "image") {
+      alert("이미지 파일만 업로드 가능합니다."); // TODO: toast
+      return;
+    }
+
+    if (file.size > 1024 * 1024 * 5) {
+      alert("5MB 이하의 이미지만 업로드 가능합니다."); // TODO: toast
+      return;
+    }
+
     const url = URL.createObjectURL(file);
     setPreview(url);
   };

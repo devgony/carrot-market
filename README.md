@@ -1275,3 +1275,23 @@ const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   setPreview(url);
 };
 ```
+
+### Challenge
+
+1. validate if user uploaded `image` type
+
+```ts
+if (file.type.split("/")[0] !== "image") {
+  alert("이미지 파일만 업로드 가능합니다."); // TODO: toast
+  return;
+}
+```
+
+2. limit size to 2MB
+
+```ts
+if (file.size > 1024 * 1024 * 5) {
+  alert("5MB 이하의 이미지만 업로드 가능합니다."); // TODO: toast
+  return;
+}
+```
