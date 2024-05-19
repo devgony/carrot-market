@@ -1295,3 +1295,17 @@ if (file.size > 1024 * 1024 * 5) {
   return;
 }
 ```
+
+## 11.2 Product Upload
+
+- use zod validation on server side
+  - coerce price from string to nubmer
+- upload to filesystem just for now
+
+```ts
+if (data.photo instanceof File) {
+  const photoData = await data.photo.arrayBuffer();
+  await fs.appendFile(`./public/${data.photo.name}`, Buffer.from(photoData));
+  data.photo = `/${data.photo.name}`;
+}
+```
