@@ -1309,3 +1309,22 @@ if (data.photo instanceof File) {
   data.photo = `/${data.photo.name}`;
 }
 ```
+
+## 11.3 Images Setup
+
+- duplicated & expensive way
+
+```
+User -> Server -> CF
+```
+
+- better way to save packets of Server
+
+```
+User -> Server -> UploadURL(to CF) -> User -> CF(by UploadURL)
+```
+
+### CloudFlare
+
+- Purchase $5 plan -> Images -> Overview -> Use API -> [Get an API token here](https://dash.cloudflare.com/profile/api-tokens) -> Create Token -> Read and write to Cloudflare Stream and Images (Use template) -> Remove Account Analytics -> Continue to summary -> Create Token -> Copy `token` to `.env`
+- Copy `Account ID` and `Account hash` to `.env`
