@@ -1348,3 +1348,32 @@ export async function getUploadUrl() {
   return data;
 }
 ```
+
+## 11.5 Image Upload
+
+- copy Image Delivery URL to CLOUDFLARE_IMAGE_URL at .env
+- add `avatar` variant on cloudflare
+- intercept submit and upload photo to cloudfare -> insert into DB
+
+```ts
+const interceptAction = async (_: any, formData: FormData) => {
+  const file = formData.get("photo");
+  if (!file) {
+    return;
+  }
+  const cloudflareForm = new FormData();
+  cloudflareForm.append("file", file);
+  const response = await fetch(uploadUrl, {
+    method: "post",
+    body: cloudflareForm,
+  });
+  console.log(await response.text());
+  if (response.status !== 200) {
+    return;
+  }
+  const photoUrl = `${process.env.NEXT_PUBLIC_CLOUDFLARE_IMAGE_URL}/${photoId}`;
+  formData.set("photo", photoUrl);
+
+  return uploadProduct(_, formData);
+};
+```
