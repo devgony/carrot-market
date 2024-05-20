@@ -1303,6 +1303,7 @@ if (file.size > 1024 * 1024 * 5) {
 - upload to filesystem just for now
 
 ```ts
+// app/products/add/actions.ts
 if (data.photo instanceof File) {
   const photoData = await data.photo.arrayBuffer();
   await fs.appendFile(`./public/${data.photo.name}`, Buffer.from(photoData));
@@ -1326,5 +1327,24 @@ User -> Server -> UploadURL(to CF) -> User -> CF(by UploadURL)
 
 ### CloudFlare
 
-- Purchase $5 plan -> Images -> Overview -> Use API -> [Get an API token here](https://dash.cloudflare.com/profile/api-tokens) -> Create Token -> Read and write to Cloudflare Stream and Images (Use template) -> Remove Account Analytics -> Continue to summary -> Create Token -> Copy `token` to `.env`
-- Copy `Account ID` and `Account hash` to `.env`
+- Purchase $5 plan -> Images -> Overview -> Use API -> [Get an API token here](https://dash.cloudflare.com/profile/api-tokens) -> Create Token -> Read and write to Cloudflare Stream and Images (Use template) -> Remove Account Analytics -> Continue to summary -> Create Token -> Copy `token` to `CLOUDFLARE_API_KEY` at `.env`
+- Copy `Account ID` and `Account hash` to `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLASRE_ACCOUNT_HASH` at `.env`
+
+## 11.4 Upload URLs
+
+```ts
+// app/products/add/actions.ts
+export async function getUploadUrl() {
+  const response = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
+}
+```
