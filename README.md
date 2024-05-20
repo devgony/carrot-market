@@ -1377,3 +1377,16 @@ const interceptAction = async (_: any, formData: FormData) => {
   return uploadProduct(_, formData);
 };
 ```
+
+## 11.6 Variants
+
+- https://dash.cloudflare.com/{id}/images/variants
+- Or use Flexible variants
+
+```ts
+// app/products/[id]/page.tsx
+src={`${product.photo}/width=500,height=500`}
+
+// components/list-product.tsx
+src={`${photo}/width=100,height=100`}
+```
