@@ -1390,3 +1390,49 @@ src={`${product.photo}/width=500,height=500`}
 // components/list-product.tsx
 src={`${photo}/width=100,height=100`}
 ```
+
+## 11.8 RHF Refactor
+
+```
+npm i react-hook-form @hookform/resolvers
+touch app/products/add/schema.ts
+```
+
+- merge RHF with zod
+
+```ts
+// app/products/add/page.tsx
+const {
+  register,
+  handleSubmit,
+  setValue,
+  formState: { errors },
+} = useForm<ProductType>({
+  resolver: zodResolver(productSchema),
+});
+```
+
+```ts
+const onImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  setFile(file); // keep File as state
+  ..
+  setValue("photo", `${process.env.NEXT_PUBLIC_CLOUDFLARE_IMAGE_URL}/${id}`); // set photoURL on form
+..
+const onSubmit = handleSubmit(async (data: ProductType) => {
+  ..
+  const formData = new FormData();
+  formData.append("title", data.title);
+  formData.append("price", data.price + "");
+  formData.append("description", data.description);
+  formData.append("photo", data.photo);
+
+  return uploadProduct(formData); // insert form to database
+..
+const onValid = async () => {
+    await onSubmit();
+};
+..
+<form action={onValid} className="p-5 flex flex-col gap-5">
+..
+  {errors.photo?.message}
+```
