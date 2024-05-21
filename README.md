@@ -1445,6 +1445,8 @@ const onValid = async () => {
 
   - it exposes a DOM node to a parent component
 
+# 12. MODALS
+
 ## 12.1 Intercepting Routes
 
 ```sh
@@ -1455,3 +1457,23 @@ touch "app/(tabs)/home/(..)products/[id]/page.tsx"
 
 - `(..)products/[id]` means if it matches with `../products/[id]`, intercept and show this component!
   - only affect for route, not for directory like `(tabs)`
+- if refresh on intercept route, it goes to original page
+
+## 12.2 Intercepting Recap
+
+- [intercepting-routes](https://nextjs.org/docs/app/building-your-application/routing/intercepting-routes)
+
+```
+(.) to match segments on the same level
+(..) to match segments one level above
+(..)(..) to match segments two levels above
+(...) to match segments from the root app directory
+```
+
+```sh
+mkdir -p "app/(tabs)/home/(.)recent/" \
+"app/(tabs)/home/recent/"
+touch "app/(tabs)/home/(.)recent/page.tsx" \
+"app/(tabs)/home/recent/page.tsx"
+mv "app/(tabs)/home/(..)products/" "app/(tabs)/home/(...)products/"
+```
