@@ -16,7 +16,6 @@ export default function ListProduct({
   photo,
   id,
 }: ListProductProps) {
-  console.log(photo);
   return (
     <Link href={`/products/${id}`} className="flex gap-5">
       <div className="relative size-28 rounded-md overflow-hidden">

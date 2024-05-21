@@ -1444,3 +1444,14 @@ const onValid = async () => {
 - To pass ref to functional component -> wrap with forwardRef
 
   - it exposes a DOM node to a parent component
+
+## 12.1 Intercepting Routes
+
+```sh
+mv "app/(tabs)/products/" "app/(tabs)/home/"
+mkdir -p "app/(tabs)/home/(..)products/[id]/"
+touch "app/(tabs)/home/(..)products/[id]/page.tsx"
+```
+
+- `(..)products/[id]` means if it matches with `../products/[id]`, intercept and show this component!
+  - only affect for route, not for directory like `(tabs)`
