@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/button";
-import Input from "@/components/input";
+import _Input from "@/components/input";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { getUploadUrl, uploadProduct } from "./actions";
@@ -75,12 +75,14 @@ export default function AddProduct() {
     formData.append("description", data.description);
     formData.append("photo", data.photo);
 
-    return uploadProduct(formData);
+    const errors = uploadProduct(formData);
+    if (errors) {
+      console.log(errors);
+    }
   });
   const onValid = async () => {
     await onSubmit();
   };
-  console.log(register("title"));
   return (
     <div>
       <form action={onValid} className="p-5 flex flex-col gap-5">
@@ -109,21 +111,21 @@ export default function AddProduct() {
           accept="image/*"
           className="hidden"
         />
-        <Input
+        <_Input
           required
           placeholder="제목"
           type="text"
           {...register("title")}
           errors={[errors.title?.message ?? ""]}
         />
-        <Input
+        <_Input
           type="number"
           required
           placeholder="가격"
           {...register("price")}
           errors={[errors.price?.message ?? ""]}
         />
-        <Input
+        <_Input
           type="text"
           required
           placeholder="자세한 설명"

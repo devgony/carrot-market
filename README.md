@@ -1399,6 +1399,7 @@ touch app/products/add/schema.ts
 ```
 
 - merge RHF with zod
+- remove useFormState -> onValid calls `await onSubmit`
 
 ```ts
 // app/products/add/page.tsx
@@ -1436,3 +1437,10 @@ const onValid = async () => {
 ..
   {errors.photo?.message}
 ```
+
+## 11.9 Recap
+
+- RHF uses ref which is not normal prop
+- To pass ref to functional component -> wrap with forwardRef
+
+  - it exposes a DOM node to a parent component

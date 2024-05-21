@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/button";
-import Input from "@/components/input";
+import _Input from "@/components/input";
 import { smsLogIn } from "./actions";
 import { useFormState } from "react-dom";
 
@@ -20,7 +20,7 @@ export default function SMSLogin() {
       </div>
       <form action={dispatch} className="flex flex-col gap-3">
         {state.token ? (
-          <Input
+          <_Input
             key="token"
             name="token"
             type="number"
@@ -31,7 +31,7 @@ export default function SMSLogin() {
             errors={state.error?.formErrors}
           />
         ) : (
-          <Input
+          <_Input
             key="phone"
             name="phone"
             type="text"
