@@ -1488,3 +1488,21 @@ mv "app/(tabs)/home/(..)products/" "app/(tabs)/home/(...)products/"
 mkdir app/@potato/
 touch app/@potato/page.tsx
 ```
+
+## 12.4 Default Routes
+
+```sh
+touch app/@potato/default.tsx
+```
+
+- Slot should have same folder structure with route
+  - eg) /home == @potato/home
+  - Slots do not affect the URL structure
+- `@potato/Page.tsx` -> only root is matching
+- To handle unmatched cases, use default page returning null
+
+```
+Soft Navigation: During client-side navigation, Next.js will perform a partial render, changing the subpage within the slot, while maintaining the other slot's active subpages, even if they don't match the current URL.
+
+Hard Navigation: After a full-page load (browser refresh), Next.js cannot determine the active state for the slots that don't match the current URL. Instead, it will render a default.js file for the unmatched slots, or 404 if default.js doesn't exist.
+```
