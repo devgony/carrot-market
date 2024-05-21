@@ -1477,3 +1477,14 @@ touch "app/(tabs)/home/(.)recent/page.tsx" \
 "app/(tabs)/home/recent/page.tsx"
 mv "app/(tabs)/home/(..)products/" "app/(tabs)/home/(...)products/"
 ```
+
+## 12.3 Parallel Routes
+
+- `@{folder}` simultaneously or conditionally render one or more pages within the same layout.
+- passed as props to the shared parent layout
+- but if refreshes -> 404
+
+```sh
+mkdir app/@potato/
+touch app/@potato/page.tsx
+```
