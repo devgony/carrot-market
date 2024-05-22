@@ -1506,3 +1506,35 @@ Soft Navigation: During client-side navigation, Next.js will perform a partial r
 
 Hard Navigation: After a full-page load (browser refresh), Next.js cannot determine the active state for the slots that don't match the current URL. Instead, it will render a default.js file for the unmatched slots, or 404 if default.js doesn't exist.
 ```
+
+## 12.5 Modal Route
+
+- Modal = Parallel + Intercepting
+  - `app/(tabs)/home/@modal/(...)products/[id]/`
+
+```sh
+rm -rf app/@potato
+mkdir -p "app/(tabs)/home/@modal/(...)products/[id]/"
+mv "app/(tabs)/home/(...)products/[id]/page.tsx" "app/(tabs)/home/@modal/(...)products/[id]/page.tsx"
+touch "app/(tabs)/home/@modal/default.tsx" \
+"app/(tabs)/home/@modal/loading.tsx" \
+"app/(tabs)/home/layout.tsx"
+```
+
+```ts
+// app/(tabs)/home/layout.tsx
+export default function HomeLayout({
+  children,
+  modal,
+}: {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}) {
+  return (
+    <>
+      {children}
+      {modal}
+    </>
+  );
+}
+```
