@@ -1538,3 +1538,12 @@ export default function HomeLayout({
   );
 }
 ```
+
+## 12.7 Modal UI
+
+- only <button> is client component -> if extract it, Modal can be server component with async for server api
+
+### Challenge
+
+1. extract button to separated component
+2. complete modal with contents
