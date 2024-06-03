@@ -1541,10 +1541,36 @@ export default function HomeLayout({
 
 ## 12.7 Modal UI
 
-- only `<button>` is client component (for useRouter)   
+- only `<button>` is client component (for useRouter)
   - if extract it, Modal can be server component with async for server api
 
 ### Challenge
 
 1. extract button to separated component
 2. complete modal with contents
+
+## 13.0 Introduction
+
+- generateMetadata -> read title from db -> should be cached
+- diable infinite scrolling for now (`components/product-list.tsx:54:61`)
+- remove `take: 1`, fetch all for now (`app/(tabs)/home/page.tsx`)
+
+## 13.1 [ nextCache ](https://nextjs.org/docs/app/api-reference/functions/unstable_cache)
+
+- unstable_cache supports Server-side cache
+
+```ts
+import { getUser } from './data';
+import { unstable_cache } from 'next/cache';
+
+const getCachedUser = unstable_cache(
+  async (id) => getUser(id), // fetchData
+  ['my-app-user'] // keyParts
+  // options: {tag, revalidate}
+);
+
+export default async function Component({ userID }) {
+  const user = await getCachedUser(userID);
+  ...
+}
+```
