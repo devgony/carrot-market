@@ -1567,7 +1567,7 @@ import { unstable_cache } from 'next/cache';
 const getCachedUser = unstable_cache(
   async (id) => getUser(id), // fetchData
   ['my-app-user'] // keyParts
-  // options: {tag, revalidate}
+  // options: {tags, revalidate}
 );
 
 export default async function Component({ userID }) {
@@ -1595,5 +1595,24 @@ const getCachedProducts = nextCache(getInitialProducts, ["home-products"], {
 const revalidate = async () => {
   "use server";
   revalidatePath("/home");
+};
+```
+
+## 13.4 revalidateTag
+
+- revalidate all caches which includes a tag
+
+```ts
+const getCachedProduct = nextCache(getProduct, ["product-detail"], {
+  tags: ["product-detail", "xxxx"],
+});
+
+const getCachedProductTitle = nextCache(getProductTitle, ["product-title"], {
+  tags: ["product-title", "xxxx"],
+});
+
+const revalidate = async () => {
+  "use server";
+  revalidateTag("xxxx");
 };
 ```
