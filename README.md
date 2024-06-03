@@ -1586,3 +1586,14 @@ const getCachedProducts = nextCache(getInitialProducts, ["home-products"], {
   revalidate: 60,
 });
 ```
+
+## 13.3 revalidatePath
+
+- revalidate whole page
+
+```ts
+const revalidate = async () => {
+  "use server";
+  revalidatePath("/home");
+};
+```
