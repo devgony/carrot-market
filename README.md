@@ -1555,11 +1555,12 @@ export default function HomeLayout({
 - diable infinite scrolling for now (`components/product-list.tsx:54:61`)
 - remove `take: 1`, fetch all for now (`app/(tabs)/home/page.tsx`)
 
-## 13.1 [ nextCache ](https://nextjs.org/docs/app/api-reference/functions/unstable_cache)
+## 13.1 nextCache
 
 - unstable_cache supports Server-side cache
 
 ```ts
+// https://nextjs.org/docs/app/api-reference/functions/unstable_cache
 import { getUser } from './data';
 import { unstable_cache } from 'next/cache';
 
@@ -1573,4 +1574,15 @@ export default async function Component({ userID }) {
   const user = await getCachedUser(userID);
   ...
 }
+```
+
+## 13.2 revalidate
+
+- If past revalidate time, fetch again else keep reading from cache
+
+```ts
+// app/(tabs)/home/page.tsx
+const getCachedProducts = nextCache(getInitialProducts, ["home-products"], {
+  revalidate: 60,
+});
 ```
