@@ -1616,3 +1616,18 @@ const revalidate = async () => {
   revalidateTag("xxxx");
 };
 ```
+
+## 13.5 fetch Cache
+
+- fetching by API automatically caches, works with revalidate and tags as well.
+
+```ts
+async function getSomeByAPI(id: number) {
+  fetch("https://api.com", {
+    next: {
+      revalidate: 60,
+      tags: ["hello"],
+    },
+  });
+}
+```
