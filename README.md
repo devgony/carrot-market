@@ -1631,3 +1631,41 @@ async function getSomeByAPI(id: number) {
   });
 }
 ```
+
+## 13.6 Production Cache
+
+- how nextJs caches
+  - on build, it fetch data and create static pages
+
+### How to decide between static or dynamic
+
+- Does this page change depending on who is looking at? -> dynamic
+  - /create-account, /products/add -> just form, `static`
+  - /profile -> depends on who is looking at, `dynamic`
+  - static should not include logic to read from `cookie`
+  - /home -> execute getInitialProducts once, everybody looks the same page, `static`
+
+```
+// npm run build
+Route (app)                              Size     First Load JS
+┌ ○ /                                    175 B          91.3 kB
+├ ○ /_not-found                          882 B          85.2 kB
+├ ○ /chat                                166 B          84.5 kB
+├ ○ /create-account                      2.29 kB        93.4 kB
+├ λ /github/complete                     0 B                0 B
+├ ○ /github/start                        0 B                0 B
+├ ○ /home                                20.4 kB         117 kB
+├ λ /home/(...)products/[id]             715 B          96.9 kB
+├ ○ /home/(.)recent                      167 B          84.5 kB
+├ ○ /home/recent                         166 B          84.5 kB
+├ ○ /life                                166 B          84.5 kB
+├ ○ /live                                166 B          84.5 kB
+├ ○ /login                               2.23 kB        93.4 kB
+├ λ /products/[id]                       186 B          96.4 kB
+├ ○ /products/add                        23.1 kB         107 kB
+├ λ /profile                             166 B          84.5 kB
+└ ○ /sms                                 1.07 kB        85.4 kB
+ƒ Middleware                             31.7 kB
+○  (Static)   prerendered as static content
+λ  (Dynamic)  server-rendered on demand using Node.js
+```

@@ -1,10 +1,9 @@
 import { UserIcon } from "@heroicons/react/24/solid";
-import { getIsOwner, getProduct } from "@/app/products/[id]/page";
 import CloseButton from "@/components/CloseButton";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { formatToWon } from "@/lib/utils";
+import { formatToWon, getIsOwner, getProduct } from "@/lib/utils";
 import Link from "next/link";
 
 export default async function Modal({ params }: { params: { id: string } }) {

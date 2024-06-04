@@ -1,5 +1,5 @@
 import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
+const cookies = require("next/headers").cookies;
 
 interface SessionContent {
   id?: number;
