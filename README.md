@@ -1730,3 +1730,13 @@ export async function getIsOwner(userId: number) {
   return false;
 }
 ```
+
+## 13.11 dynamicParams
+
+```ts
+// on some page file
+export const dynamicParams = true;
+```
+
+- true(default): new param > fetch from db > create new static page > read static
+- false: only prerendered pages will be found. never update til restart server
