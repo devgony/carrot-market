@@ -1682,3 +1682,11 @@ Route (app)                              Size     First Load JS
 - export const revalidate
   - Set the default revalidation time for a layout or page. This option does not override the revalidate value set by individual fetch requests.
   - even thought we don't use cache, on build stage, create static page and revalidate only the time passed exported `revalidate` value
+
+## 13.9 Recap part Two
+
+- unstable_cache like SWR: fn, [name], { revalidate, tags }
+- revalidatePath
+- fetch caches automatically
+  - fetch("route", {next: {revalidate, tags}})
+- Suspense isolates `async executions` and render fallback: other components will be rendered directly
