@@ -1,5 +1,4 @@
 import db from "@/lib/db";
-import getSession from "@/lib/session";
 import { formatToWon, getIsOwner, getProduct } from "@/lib/utils";
 import { UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -8,7 +7,7 @@ import { notFound } from "next/navigation";
 import { unstable_cache as nextCache, revalidateTag } from "next/cache";
 
 const getCachedProduct = nextCache(getProduct, ["product-detail"], {
-  tags: ["product-detail", "xxxx"],
+  tags: ["product-detail"],
 });
 
 async function getProductTitle(id: number) {
@@ -25,7 +24,7 @@ async function getProductTitle(id: number) {
 }
 
 const getCachedProductTitle = nextCache(getProductTitle, ["product-title"], {
-  tags: ["product-title", "xxxx"],
+  tags: ["product-title"],
 });
 
 export async function generateMetadata({ params }: { params: { id: string } }) {

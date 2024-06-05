@@ -1669,3 +1669,16 @@ Route (app)                              Size     First Load JS
 ○  (Static)   prerendered as static content
 λ  (Dynamic)  server-rendered on demand using Node.js
 ```
+
+## 13.7 Route Segment Config
+
+- The [Route Segment Config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config) allows you to configure the behavior of a Page, Layout, or Route Handler by directly exporting the following variables:
+
+- export const dynamic
+
+  - Change the dynamic behavior of a layout or page to fully static or fully dynamic.
+  - 'auto' | 'force-dynamic' | 'error' | 'force-static'
+
+- export const revalidate
+  - Set the default revalidation time for a layout or page. This option does not override the revalidate value set by individual fetch requests.
+  - even thought we don't use cache, on build stage, create static page and revalidate only the time passed exported `revalidate` value
