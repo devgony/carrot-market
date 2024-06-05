@@ -1690,3 +1690,43 @@ Route (app)                              Size     First Load JS
 - fetch caches automatically
   - fetch("route", {next: {revalidate, tags}})
 - Suspense isolates `async executions` and render fallback: other components will be rendered directly
+
+## 13.10 generateStaticParams
+
+- fetch all possible params in advance and prerender
+- it converts dynamic to StaticSiteGeneration pages
+
+```ts
+export async function generateStaticParams() {
+  const products = await db.product.findMany({
+    select: {
+      id: true,
+    },
+  });
+  return products.map((product) => ({ id: product.id + "" }));
+}
+```
+
+```diff
+# npm run build
+- ├ λ /products/[id]                       186 B          96.4 kB
++ ├ ● /products/[id]                       186 B          96.4 kB
++ ├   ├ /products/1
++ ├   ├ /products/2
++ ├   ├ /products/3
++ ├   └ /products/9
+
++ ●  (SSG)      prerendered as static HTML (uses getStaticProps)
+```
+
+- Q: To convert to SSG, it should not use sessionStorage but it looks fine?
+
+```ts
+export async function getIsOwner(userId: number) {
+  // const session = await getSession();
+  // if (session.id) {
+  //   return session.id === userId;
+  // }
+  return false;
+}
+```

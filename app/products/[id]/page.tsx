@@ -104,3 +104,12 @@ export default async function ProductDetail({
     </div>
   );
 }
+
+export async function generateStaticParams() {
+  const products = await db.product.findMany({
+    select: {
+      id: true,
+    },
+  });
+  return products.map((product) => ({ id: product.id + "" }));
+}
