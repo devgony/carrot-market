@@ -1756,3 +1756,43 @@ export const dynamicParams = true;
 - composite ID
 - onDelete: cascade
 - npm run mig
+
+## 14.1 See Posts
+
+```sh
+touch "app/(tabs)/life/loading.tsx"
+```
+
+- to render loading
+
+```ts
+// app/(tabs)/life/page.tsx
+const mockLoading = async () => {
+  await new Promise((r) => setTimeout(r, 10000));
+};
+```
+
+- add few posts by prisma studio
+- `_count` to aggregate joined tables
+
+```ts
+// app/(tabs)/life/page.tsx
+async function getPosts() {
+  const posts = await db.post.findMany({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      views: true,
+      created_at: true,
+      _count: {
+        select: {
+          comments: true,
+          likes: true,
+        },
+      },
+    },
+  });
+  return posts;
+}
+```
