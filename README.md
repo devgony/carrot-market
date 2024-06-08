@@ -1796,3 +1796,28 @@ async function getPosts() {
   return posts;
 }
 ```
+
+## 14.2 Likes and Dislikes
+
+```sh
+mkdir -p "app/posts/[id]/"
+touch "app/posts/[id]/page.tsx"
+```
+
+- enter page > update view and return updated record
+  - atomic operation to increase views
+
+```ts
+// app/posts/[id]/page.tsx
+const post = await db.post.update({
+  where: {
+    id,
+  },
+  data: {
+    views: {
+      increment: 1,
+    ..
+```
+
+- if nothing accessed by where clause on update, throws error -> wrap with try-catch
+  - but seems like it does like touch catch block
