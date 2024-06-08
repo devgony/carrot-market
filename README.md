@@ -1821,3 +1821,20 @@ const post = await db.post.update({
 
 - if nothing accessed by where clause on update, throws error -> wrap with try-catch
   - but seems like it does like touch catch block
+
+## 14.3 Cache Tags
+
+- inefficient whole relivatePath -> increase views as well -> revalidateTag with id
+  - wrap nextCache with func to get postId
+
+```ts
+function getCachedLikesStatus(postId: number) {
+  const cachedOperation = nextCache(getLikeStatus, ["product-like-status"], {
+    tags: [`like-status-${postId}`],
+  });
+
+  return cachedOperation(postId);
+}
+..
+revalidateTag(`like-status-${id}`);
+```
