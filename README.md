@@ -1748,3 +1748,11 @@ export const dynamicParams = true;
   - should revalidate Products(/home) and ProductDetail (/product/id)
   - `/products/add` conflicts with /products/[id] so that replace `<Link>` to `<a>` to use hardRedirect just for now
 - implement editProduct page with cachinng
+
+# 14. OPTIMISTIC UPDATES
+
+## 14.0 Introduction
+
+- composite ID
+- onDelete: cascade
+- npm run mig
