@@ -1740,3 +1740,11 @@ export const dynamicParams = true;
 
 - true(default): new param > fetch from db > create new static page > read static
 - false: only prerendered pages will be found. never update til restart server
+
+## 13.12 Code Challenge
+
+- choose caching strategy for uploadProudct
+  - nextCache, dynamic, revalidate, revalidatePath, revliadateTags
+  - should revalidate Products(/home) and ProductDetail (/product/id)
+  - `/products/add` conflicts with /products/[id] so that replace `<Link>` to `<a>` to use hardRedirect just for now
+- implement editProduct page with cachinng

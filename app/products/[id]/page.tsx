@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 import { unstable_cache as nextCache, revalidateTag } from "next/cache";
 
 const getCachedProduct = nextCache(getProduct, ["product-detail"], {
-  tags: ["product-detail"],
+  tags: ["product-detail", "product"],
 });
 
 async function getProductTitle(id: number) {
@@ -24,7 +24,7 @@ async function getProductTitle(id: number) {
 }
 
 const getCachedProductTitle = nextCache(getProductTitle, ["product-title"], {
-  tags: ["product-title"],
+  tags: ["product-title", "product"],
 });
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -53,7 +53,7 @@ export default async function ProductDetail({
     revalidateTag("xxxx");
   };
   return (
-    <div className="pb-40">
+    <div>
       <div className="relative aspect-square">
         <Image
           className="object-cover"
@@ -83,23 +83,31 @@ export default async function ProductDetail({
         <h1 className="text-2xl font-semibold">{product.title}</h1>
         <p>{product.description}</p>
       </div>
-      <div className="fixed w-full bottom-0 left-0 p-5 pb-10 bg-neutral-800 flex justify-between items-center max-w-screen-sm">
+      <div className="sticky w-full bottom-0 left-0 p-5 bg-neutral-800 flex justify-between items-center max-w-screen-sm">
         <span className="font-semibold text-xl">
           {formatToWon(product.price)}원
         </span>
-        {isOwner ? (
-          <form action={revalidate}>
-            <button className="bg-red-500 px-5 py-2.5 rounded-md text-white font-semibold">
-              Revalidate title cache
-            </button>
-          </form>
-        ) : null}
-        <Link
-          className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold"
-          href={``}
-        >
-          채팅하기
-        </Link>
+        <section className="flex gap-2 items-center">
+          {isOwner ? (
+            <form action={revalidate}>
+              <button className="bg-red-500 px-5 py-2.5 rounded-md text-white font-semibold">
+                Revalidate title cache
+              </button>
+            </form>
+          ) : null}
+          <Link
+            className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold"
+            href={`/products/${product.id}/edit`}
+          >
+            Edit
+          </Link>
+          <Link
+            className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold"
+            href={``}
+          >
+            채팅하기
+          </Link>
+        </section>
       </div>
     </div>
   );

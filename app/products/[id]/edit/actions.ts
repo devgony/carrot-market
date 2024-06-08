@@ -1,27 +1,25 @@
 "use server";
 
-import { z } from "zod";
-import db from "@/lib/db";
 import getSession from "@/lib/session";
-import { redirect } from "next/navigation";
-import { productSchema } from "./schema";
+import { productSchema } from "../../add/schema";
+import db from "@/lib/db";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 
-export async function uploadProduct(formData: FormData) {
+export const editProduct = async (formData: FormData) => {
   const data = {
     photo: formData.get("photo"),
     title: formData.get("title"),
     price: formData.get("price"),
     description: formData.get("description"),
   };
-
   const result = productSchema.safeParse(data);
   if (!result.success) {
     return result.error.flatten();
   } else {
     const session = await getSession();
     if (session.id) {
-      const product = await db.product.create({
+      const product = await db.product.update({
         data: {
           title: result.data.title,
           description: result.data.description,
@@ -33,13 +31,12 @@ export async function uploadProduct(formData: FormData) {
             },
           },
         },
-        select: {
-          id: true,
+        where: {
+          id: 1,
         },
       });
       revalidateTag("product");
-
       redirect(`/products/${product.id}`);
     }
   }
-}
+};

@@ -4,10 +4,11 @@ import Button from "@/components/button";
 import _Input from "@/components/input";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { getUploadUrl, uploadProduct } from "./actions";
+import { uploadProduct } from "./actions";
 import { useForm } from "react-hook-form";
 import { ProductType, productSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { onImageChange } from "@/lib/utils";
 
 export default function AddProduct() {
   const [preview, setPreview] = useState("");
@@ -21,39 +22,6 @@ export default function AddProduct() {
   } = useForm<ProductType>({
     resolver: zodResolver(productSchema),
   });
-  const onImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { files },
-    } = event;
-    if (!files) {
-      return;
-    }
-    const file = files[0];
-
-    if (file.type.split("/")[0] !== "image") {
-      alert("이미지 파일만 업로드 가능합니다."); // TODO: toast
-      return;
-    }
-
-    if (file.size > 1024 * 1024 * 5) {
-      alert("5MB 이하의 이미지만 업로드 가능합니다."); // TODO: toast
-      return;
-    }
-
-    const url = URL.createObjectURL(file);
-    setPreview(url);
-    setFile(file);
-
-    const { success, result } = await getUploadUrl();
-    if (success) {
-      const { id, uploadURL } = result;
-      setUploadUrl(uploadURL);
-      setValue(
-        "photo",
-        `${process.env.NEXT_PUBLIC_CLOUDFLARE_IMAGE_URL}/${id}`
-      );
-    }
-  };
 
   const onSubmit = handleSubmit(async (data: ProductType) => {
     if (!file) {
@@ -67,6 +35,7 @@ export default function AddProduct() {
     });
 
     if (response.status !== 200) {
+      console.error("response status is not 200");
       return;
     }
     const formData = new FormData();
@@ -75,9 +44,9 @@ export default function AddProduct() {
     formData.append("description", data.description);
     formData.append("photo", data.photo);
 
-    const errors = uploadProduct(formData);
+    const errors = await uploadProduct(formData);
     if (errors) {
-      console.log(errors);
+      console.error(errors);
     }
   });
   const onValid = async () => {
@@ -104,7 +73,9 @@ export default function AddProduct() {
           ) : null}
         </label>
         <input
-          onChange={onImageChange}
+          onChange={(event) =>
+            onImageChange(event, setPreview, setFile, setUploadUrl, setValue)
+          }
           type="file"
           id="photo"
           name="photo"
