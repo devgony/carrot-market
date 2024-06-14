@@ -1838,3 +1838,33 @@ function getCachedLikesStatus(postId: number) {
 ..
 revalidateTag(`like-status-${id}`);
 ```
+
+## 14.4 useOptimistic
+
+- reducerFn immediately mutate the client state, revalidate later with real data
+
+```sh
+touch app/posts/[id]/actions.ts \
+components/like-button.tsx
+```
+
+```ts
+// components/like-button.tsx
+const [state, reducerFn] = useOptimistic(
+  { isLiked, likeCount },
+  (previousState, payload) => ({
+    isLiked: !previousState.isLiked,
+    likeCount: previousState.isLiked
+      ? previousState.likeCount - 1
+      : previousState.likeCount + 1,
+  })
+);
+const onClick = async () => {
+  reducerFn(undefined);
+  if (isLiked) {
+    await dislikePost(postId);
+  } else {
+    await likePost(postId);
+  }
+};
+```
