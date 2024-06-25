@@ -1868,3 +1868,17 @@ const onClick = async () => {
   }
 };
 ```
+
+# 15 REALTIME CHAT
+
+## 15.1 Models
+
+- at least two user should be exist
+- product should added by seller
+- add ChatRoom and Message schema
+
+```
+User:ChatRoom = N:M
+ChatRoom:Message = 1:N
+User:Message = 1:N
+```
