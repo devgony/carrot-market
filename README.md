@@ -1885,7 +1885,17 @@ User:Message = 1:N
 
 ## 15.2 Chat Room
 
+- impl getRoom at `app/chats/[id]/page.tsx`
+
 ```sh
 mkdir -p "app/chats/[id]"
 touch "app/chats/[id]/page.tsx"
+```
+
+## 15.3 Messages
+
+- impl getMesseges at `app/chats/[id]/page.tsx`
+
+```sh
+touch components/chat-messages-list.tsx
 ```
