@@ -1882,3 +1882,10 @@ User:ChatRoom = N:M
 ChatRoom:Message = 1:N
 User:Message = 1:N
 ```
+
+## 15.2 Chat Room
+
+```sh
+mkdir -p "app/chats/[id]"
+touch "app/chats/[id]/page.tsx"
+```
