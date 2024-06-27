@@ -1946,3 +1946,16 @@ channel.current?.send({
 ## 15.6 Realtime Messages
 
 - impl `getUserProfile` and send message with userProfile to render avatar and name at `app/chats/[id]/page.tsx`
+
+## 15.7 Code Challenge
+
+- impl saveMessage to save message permanently
+
+```sh
+touch app/chats/actions.ts
+```
+
+- Challenge
+
+1. Create a chat list (display the avatar, name, and last message of the interlocutor)
+2. If there are unread messages, indicate this in the chat list
