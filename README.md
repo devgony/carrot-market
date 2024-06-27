@@ -1899,3 +1899,21 @@ touch "app/chats/[id]/page.tsx"
 ```sh
 touch components/chat-messages-list.tsx
 ```
+
+## 15.4 Realtime Channel
+
+- subscribe from supabase
+
+```sh
+npm i @supabase/supabase-js
+```
+
+```ts
+useEffect(() => {
+  const client = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
+  const channel = client.channel(`room-${chatRoomId}`);
+  channel.on("broadcast", { event: "message" }, (payload) => {
+    console.log(payload);
+  });
+}, [chatRoomId]);
+```
