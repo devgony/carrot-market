@@ -1909,11 +1909,36 @@ npm i @supabase/supabase-js
 ```
 
 ```ts
-useEffect(() => {
-  const client = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
-  const channel = client.channel(`room-${chatRoomId}`);
-  channel.on("broadcast", { event: "message" }, (payload) => {
-    console.log(payload);
+const client = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
+const channel = client.channel(`room-${chatRoomId}`);
+channel.on("broadcast", { event: "message" }, (payload) => {
+  console.log(payload);
+});
+```
+
+## 15.5 Supabase Broadcast
+
+- send and unsubscribe supabase.RealtimeChannel
+
+```ts
+const channel = useRef<RealtimeChannel>();
+..
+channel.current?.send({
+    type: "broadcast",
+    event: "message",
+    payload: { message },
   });
+..
+  useEffect(() => {
+  const client = createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
+  channel.current = client.channel(`room-${chatRoomId}`);
+  channel.current
+    .on("broadcast", { event: "message" }, (payload) => {
+      console.log(payload);
+    })
+    .subscribe();
+  return () => {
+    channel.current?.unsubscribe();
+  };
 }, [chatRoomId]);
 ```
