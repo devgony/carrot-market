@@ -1942,3 +1942,7 @@ channel.current?.send({
   };
 }, [chatRoomId]);
 ```
+
+## 15.6 Realtime Messages
+
+- impl `getUserProfile` and send message with userProfile to render avatar and name at `app/chats/[id]/page.tsx`

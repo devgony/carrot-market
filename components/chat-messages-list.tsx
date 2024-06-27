@@ -7,19 +7,22 @@ import { createClient, RealtimeChannel } from "@supabase/supabase-js";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-const SUPABASE_PUBLIC_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmaHZzbHpsbnp6eXRmd21jd3dzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1MzIwMDYsImV4cCI6MjAyNzEwODAwNn0.6_CBGkLSb8hl06prsZkzsUrf98pjwcwgXgqeFLNiXL0";
-const SUPABASE_URL = "https://bfhvslzlnzzytfwmcwws.supabase.co";
+const SUPABASE_PUBLIC_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 
 interface ChatMessageListProps {
   chatRoomId: string;
   initialMessages: InitialChatMessages;
   userId: number;
+  username: string;
+  avatar: string;
 }
 export default function ChatMessagesList({
   chatRoomId,
   initialMessages,
   userId,
+  username,
+  avatar,
 }: ChatMessageListProps) {
   const [messages, setMessages] = useState(initialMessages);
   const [message, setMessage] = useState("");
@@ -48,7 +51,16 @@ export default function ChatMessagesList({
     channel.current?.send({
       type: "broadcast",
       event: "message",
-      payload: { message },
+      payload: {
+        id: Date.now(),
+        payload: message,
+        created_at: new Date(),
+        userId,
+        user: {
+          username,
+          avatar,
+        },
+      },
     });
     setMessage("");
   };
@@ -57,7 +69,7 @@ export default function ChatMessagesList({
     channel.current = client.channel(`room-${chatRoomId}`);
     channel.current
       .on("broadcast", { event: "message" }, (payload) => {
-        console.log(payload);
+        setMessages((prevMsgs) => [...prevMsgs, payload.payload]);
       })
       .subscribe();
     return () => {
@@ -75,7 +87,7 @@ export default function ChatMessagesList({
         >
           {message.userId === userId ? null : (
             <Image
-              src={message.user.avatar!}
+              src={message.user.avatar ?? ""}
               alt={message.user.username}
               width={50}
               height={50}
