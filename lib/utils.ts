@@ -1,6 +1,8 @@
 import db from "./db";
 import getSession from "./session";
 import { getUploadUrl } from "./cloudflare";
+import { redirect } from "next/navigation";
+import { Prisma } from "@prisma/client";
 
 export function formatToTimeAgo(date: string): string {
   const dayInMs = 1000 * 60 * 60 * 24;
@@ -42,6 +44,7 @@ export async function getProduct(id: number) {
   });
   return product;
 }
+type ProductType = Prisma.PromiseReturnType<typeof getProduct>;
 
 export const onImageChange = async (
   event: React.ChangeEvent<HTMLInputElement>,
@@ -81,4 +84,26 @@ export const onImageChange = async (
     setUploadUrl(uploadURL);
     setValue("photo", `${process.env.NEXT_PUBLIC_CLOUDFLARE_IMAGE_URL}/${id}`);
   }
+};
+
+export const createChatRoom = async (product: Exclude<ProductType, null>) => {
+  const session = await getSession();
+  const room = await db.chatRoom.create({
+    data: {
+      users: {
+        connect: [
+          {
+            id: product.userId,
+          },
+          {
+            id: session.id,
+          },
+        ],
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
+  redirect(`/chats/${room.id}`);
 };

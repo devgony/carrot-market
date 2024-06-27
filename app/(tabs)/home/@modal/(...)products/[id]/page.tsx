@@ -3,7 +3,12 @@ import CloseButton from "@/components/CloseButton";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { formatToWon, getIsOwner, getProduct } from "@/lib/utils";
+import {
+  createChatRoom,
+  formatToWon,
+  getIsOwner,
+  getProduct,
+} from "@/lib/utils";
 import Link from "next/link";
 
 export default async function Modal({ params }: { params: { id: string } }) {
@@ -60,12 +65,16 @@ export default async function Modal({ params }: { params: { id: string } }) {
                   Delete product
                 </button>
               ) : null}
-              <Link
-                className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold w-full text-center"
-                href={``}
+              <form
+                action={async () => {
+                  "use server";
+                  return await createChatRoom(product);
+                }}
               >
-                채팅하기
-              </Link>
+                <button className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold">
+                  채팅하기
+                </button>
+              </form>
             </div>
           </div>
         </section>

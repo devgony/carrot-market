@@ -1,5 +1,10 @@
 import db from "@/lib/db";
-import { formatToWon, getIsOwner, getProduct } from "@/lib/utils";
+import {
+  createChatRoom,
+  formatToWon,
+  getIsOwner,
+  getProduct,
+} from "@/lib/utils";
 import { UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,28 +58,7 @@ export default async function ProductDetail({
     "use server";
     revalidateTag("xxxx");
   };
-  const createChatRoom = async () => {
-    "use server";
-    const session = await getSession();
-    const room = await db.chatRoom.create({
-      data: {
-        users: {
-          connect: [
-            {
-              id: product.userId,
-            },
-            {
-              id: session.id,
-            },
-          ],
-        },
-      },
-      select: {
-        id: true,
-      },
-    });
-    redirect(`/chats/${room.id}`);
-  };
+
   return (
     <div>
       <div className="relative aspect-square">
@@ -124,7 +108,12 @@ export default async function ProductDetail({
           >
             Edit
           </Link>
-          <form action={createChatRoom}>
+          <form
+            action={async () => {
+              "use server";
+              return await createChatRoom(product);
+            }}
+          >
             <button className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold">
               채팅하기
             </button>
