@@ -1955,7 +1955,11 @@ channel.current?.send({
 touch app/chats/actions.ts
 ```
 
-- Challenge
+### Challenge
 
-1. Create a chat list (display the avatar, name, and last message of the interlocutor)
-2. If there are unread messages, indicate this in the chat list
+- 1.Create a chat list (display the avatar, name, and last message of the interlocutor)
+- 2.If there are unread messages, indicate this on the chat list
+- 🎁.Implement delete chat button
+- 🎁.In chatroom, show `1` near each messages if it wasn't read yet
+- Q.Why messages state at `components/chat-messages-list.tsx` is not renewed?
+  - Even though the fetched initialMessages is renewed..

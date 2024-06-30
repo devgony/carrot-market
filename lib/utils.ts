@@ -3,6 +3,7 @@ import getSession from "./session";
 import { getUploadUrl } from "./cloudflare";
 import { redirect } from "next/navigation";
 import { Prisma } from "@prisma/client";
+import { revalidateTag } from "next/cache";
 
 export function formatToTimeAgo(date: string): string {
   const dayInMs = 1000 * 60 * 60 * 24;
@@ -28,7 +29,6 @@ export async function getIsOwner(userId: number) {
 }
 
 export async function getProduct(id: number) {
-  console.log("product");
   const product = await db.product.findUnique({
     where: {
       id,
@@ -105,5 +105,7 @@ export const createChatRoom = async (product: Exclude<ProductType, null>) => {
       id: true,
     },
   });
+
+  revalidateTag("chat-rooms");
   redirect(`/chats/${room.id}`);
 };

@@ -3,9 +3,12 @@
 import db from "@/lib/db";
 import getSession from "@/lib/session";
 
-export async function saveMessage(payload: string, chatRoomId: string) {
+export async function saveMessage(
+  payload: string,
+  chatRoomId: string
+): Promise<number> {
   const session = await getSession();
-  await db.message.create({
+  const created = await db.message.create({
     data: {
       payload,
       chatRoomId,
@@ -13,4 +16,6 @@ export async function saveMessage(payload: string, chatRoomId: string) {
     },
     select: { id: true },
   });
+
+  return created.id;
 }

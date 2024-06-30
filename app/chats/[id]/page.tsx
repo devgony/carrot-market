@@ -26,6 +26,46 @@ async function getRoom(id: string) {
 }
 
 async function getMessages(chatRoomId: string) {
+  const session = await getSession();
+  const messageIds = await db.message.findMany({
+    where: {
+      chatRoomId,
+      AND: [
+        {
+          NOT: {
+            message_read_by: {
+              some: {
+                userId: session.id,
+              },
+            },
+          },
+        },
+        {
+          NOT: {
+            userId: session.id,
+          },
+        },
+      ],
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  const upserted = await db.messageReadBy.createMany({
+    data: messageIds.map(({ id }) => ({
+      userId: session.id!,
+      messageId: id,
+      readAt: new Date(),
+    })),
+  });
+
+  if (upserted.count > 0) {
+    // revalidateTag(`chat-room-${chatRoomId}-messeges`);
+    // console.log("revalidatePath", `/chats/${chatRoomId}`);
+    // revalidatePath(`/chats/${chatRoomId}`);
+  }
+
   const messages = await db.message.findMany({
     where: {
       chatRoomId,
@@ -41,9 +81,24 @@ async function getMessages(chatRoomId: string) {
           username: true,
         },
       },
+      message_read_by: {
+        select: {
+          userId: true,
+        },
+      },
     },
   });
-  return messages;
+
+  const res = messages.map(({ message_read_by, ...others }) => {
+    return {
+      ...others,
+      read: message_read_by.length > 0, // TODO: handle with SQL
+    };
+  });
+
+  console.log(">>", res.length);
+
+  return res;
 }
 export type InitialChatMessages = Prisma.PromiseReturnType<typeof getMessages>;
 
@@ -61,6 +116,10 @@ async function getUserProfile() {
   return user;
 }
 
+// const cachedMessages = async (id: string) =>
+//   await nextCache(getMessages, [`chat-room-${id}-messeges`], {
+//     tags: [`chat-room-${id}-messeges`],
+//   })(id);
 export default async function ChatRoom({ params }: { params: { id: string } }) {
   const room = await getRoom(params.id);
   if (!room) {
