@@ -1963,3 +1963,44 @@ touch app/chats/actions.ts
 - 🎁.In chatroom, show `1` near each messages if it wasn't read yet
 - Q.Why messages state at `components/chat-messages-list.tsx` is not renewed?
   - Even though the fetched initialMessages is renewed..
+
+# LIVE STREAMING
+
+## 16.0 Introduction
+
+- [cloudflare stream live](https://developers.cloudflare.com/stream/stream-live/)
+
+![alt text](https://developers.cloudflare.com/assets/live-stream-workflow_hucb4ae18dfe5885708a239a3b1286e1b5_19867_691x397_resize_q75_box_3-7500ef1b.png)
+
+## 16.1 Live Input
+
+- [OBS Studio](https://obsproject.com/)
+
+```sh
+mkdir -p "app/streams/[id]/" \
+app/streams/add/
+
+touch app/streams/add/page.tsx \
+app/streams/add/actions.ts \
+"app/streams/[id]/page.tsx"
+```
+
+```ts
+const response = await fetch(
+  `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/stream/live_inputs`,
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+    },
+    body: JSON.stringify({
+      meta: {
+        name: results.data,
+      },
+      recording: {
+        mode: "automatic",
+      },
+    }),
+  }
+);
+```
