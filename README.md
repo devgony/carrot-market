@@ -2004,3 +2004,13 @@ const response = await fetch(
   }
 );
 ```
+
+## 16.3 Code Challenge (not implemented)
+
+1. handle what happens when finish stream
+
+- delete stream
+- mark stream as finished > replace with replay video
+
+2. implement chat under live
+3. show stream-list with thumbnails
