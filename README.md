@@ -2014,3 +2014,14 @@ const response = await fetch(
 
 2. implement chat under live
 3. show stream-list with thumbnails
+
+# 17 NEXTJS EXTRAS
+
+## 17.1 Fonts
+
+-
+
+```ts
+mkdir app/extras
+touch app/extras/page.tsx
+```
